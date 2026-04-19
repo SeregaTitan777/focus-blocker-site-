@@ -254,6 +254,60 @@
       margin: 0 10px;
     }
 
+    /* Модальное окно с инструкцией */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      border-radius: 24px;
+      padding: 30px;
+      max-width: 500px;
+      width: 90%;
+      border: 1px solid rgba(255,255,255,0.2);
+      position: relative;
+    }
+
+    .modal-content h3 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #4caf50;
+    }
+
+    .modal-content ol {
+      margin-left: 20px;
+      margin-bottom: 20px;
+    }
+
+    .modal-content li {
+      margin-bottom: 10px;
+    }
+
+    .close-modal {
+      background: #4caf50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    .close-modal:hover {
+      opacity: 0.85;
+    }
+
     /* Футер */
     .footer {
       text-align: center;
@@ -369,9 +423,9 @@
       </div>
     </div>
 
-    <!-- Установка -->
+    <!-- Инструкция по установке -->
     <div class="how-to" id="install">
-      <h2>📥 Как установить</h2>
+      <h2>📥 Пошаговая инструкция по установке</h2>
       <div class="steps">
         <div class="step">
           <div class="step-number">1</div>
@@ -381,24 +435,28 @@
         <div class="step">
           <div class="step-number">2</div>
           <h3>Распакуйте</h3>
-          <p>Распакуйте архив в любую папку</p>
+          <p>Распакуйте архив в любую папку на компьютере</p>
         </div>
         <div class="step">
           <div class="step-number">3</div>
           <h3>Откройте Chrome</h3>
-          <p>Перейдите на страницу chrome://extensions/</p>
+          <p>В адресной строке введите: <strong>chrome://extensions/</strong></p>
         </div>
         <div class="step">
           <div class="step-number">4</div>
-          <h3>Включите режим разработчика</h3>
-          <p>Переключатель в правом верхнем углу</p>
+          <h3>Режим разработчика</h3>
+          <p>Включите переключатель «Режим разработчика» в правом верхнем углу</p>
         </div>
         <div class="step">
           <div class="step-number">5</div>
           <h3>Загрузите расширение</h3>
-          <p>Нажмите «Загрузить распакованное» и выберите папку</p>
+          <p>Нажмите кнопку «Загрузить распакованное расширение» и выберите распакованную папку</p>
         </div>
       </div>
+      <p style="text-align: center; margin-top: 30px; font-size: 14px; opacity: 0.8;">
+        ✅ После установки иконка расширения появится на панели инструментов Chrome<br>
+        ⚙️ Нажмите на неё, чтобы открыть настройки и добавить сайты в чёрный список
+      </p>
     </div>
 
     <!-- Скачивание -->
@@ -406,8 +464,10 @@
       <h2>🚀 Готовы стать продуктивнее?</h2>
       <p>Скачайте Focus Blocker прямо сейчас — это бесплатно!</p>
       <div class="download-buttons">
-        <button class="btn btn-large" id="downloadBtn">📦 Инструкция по установке расширения(ZIP)</button>
-        <a href="focus-blocker.zip" class="focus-blocker.zip" download>📦 Скачать расширение (ZIP)</a>Инструкция по установке</a>
+        <!-- КНОПКА СКАЧИВАНИЯ ZIP-АРХИВА -->
+        <a href="focus-blocker.zip" class="btn btn-large" download>📦 Скачать расширение (ZIP)</a>
+        <!-- КНОПКА ПОКАЗА ИНСТРУКЦИИ В МОДАЛЬНОМ ОКНЕ -->
+        <button class="btn btn-outline btn-large" id="showInstructionsBtn">📖 Показать инструкцию</button>
       </div>
       <p style="margin-top: 30px; font-size: 14px; opacity: 0.7;">
         ⚡ После установки не забудьте настроить список сайтов и расписание в настройках расширения
@@ -422,27 +482,46 @@
     </div>
   </div>
 
+  <!-- Модальное окно с инструкцией -->
+  <div id="instructionModal" class="modal">
+    <div class="modal-content">
+      <h3>📖 Инструкция по установке</h3>
+      <ol>
+        <li>Скачайте ZIP-архив с расширением (кнопка выше)</li>
+        <li>Распакуйте архив в любую папку на компьютере</li>
+        <li>Откройте Chrome и введите в адресной строке: <strong>chrome://extensions/</strong></li>
+        <li>Включите <strong>«Режим разработчика»</strong> (переключатель в правом верхнем углу)</li>
+        <li>Нажмите кнопку <strong>«Загрузить распакованное расширение»</strong></li>
+        <li>Выберите распакованную папку <strong>focus-blocker</strong></li>
+        <li>Готово! Иконка расширения появится на панели инструментов</li>
+      </ol>
+      <p style="margin: 15px 0; font-size: 14px; opacity: 0.8;">
+        💡 После установки нажмите на иконку расширения, затем на «Настройки»,<br>
+        чтобы добавить сайты в чёрный список и настроить расписание.
+      </p>
+      <button class="close-modal">Закрыть</button>
+    </div>
+  </div>
+
   <script>
-    // Функция для создания ZIP-архива и скачивания
-   // Функция для создания ZIP-архива и скачивания
-    document.getElementById('downloadBtn').addEventListener('click', async () => {
-      // Показываем сообщение с инструкцией
-      alert(
-        '📦 Инструкция по установке:\n\n' +
-        '1. Скачайте все файлы расширения из предоставленного кода\n' +
-        '2. Создайте папку focus-blocker\n' +
-        '3. Скопируйте все файлы в эту папку:\n' +
-        '   - manifest.json\n' +
-        '   - background.js\n' +
-        '   - popup.html, popup.css, popup.js\n' +
-        '   - options.html, options.css, options.js\n' +
-        '   - blocked.html, blocked.css, blocked.js\n' +
-        '4. Откройте chrome://extensions/\n' +
-        '5. Включите «Режим разработчика»\n' +
-        '6. Нажмите «Загрузить распакованное расширение»\n' +
-        '7. Выберите папку focus-blocker\n\n' +
-        'Готово! Расширение появится на панели инструментов.'
-      );
+    // Модальное окно с инструкцией
+    const modal = document.getElementById('instructionModal');
+    const showBtn = document.getElementById('showInstructionsBtn');
+    const closeBtn = document.querySelector('.close-modal');
+
+    showBtn.addEventListener('click', () => {
+      modal.style.display = 'flex';
+    });
+
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    // Закрытие по клику вне окна
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
     });
   </script>
 </body>
